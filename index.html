@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Payment + Donation</title>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <h1>Custom Payment with 2.5% Fee</h1>
+
+  <label>
+    Service Fees (subject to 2.5% fee):
+    <input id="serviceFees" type="number" placeholder="0.00" step="0.01">
+  </label>
+  <br><br>
+
+  <label>
+    Optional Donation (no fee):
+    <input id="donation" type="number" placeholder="0.00" step="0.01">
+  </label>
+  <br><br>
+
+  <p id="breakdown"></p>
+  <p id="total"><strong>Total: $0.00</strong></p>
+  <button id="pay">Pay Now</button>
+
+  <script>
+    const stripe = Stripe("pk_live_51SDAdjCu4bQwDBPFOremaK0SfFqZkfGihFRH9wYZxHkrFqTYn0OrAxGxXg3Kmk9sEtWU9FSLlfTMx8zia5EWjHWR00F5mMj1wr"); // Replace with your publishable key
+
+    const serviceFeesInput = document.getElementById("serviceFees");
+    const donationInput = document.getElementById("donation");
+    const breakdownDisplay = document.getElementById("breakdown");
+    const totalDisplay = document.getElementById("total");
+    const payBtn = document.getElementById("pay");
+
+    function updateTotal() {
+      const serviceFees = parseFloat(serviceFeesInput.value) || 0;
+      const donation = parseFloat(donationInput.value) || 0;
+      const fee = serviceFees * 0.025; // 2.5% fee
+      const total = serviceFees + fee + donation;
+
+      breakdownDisplay.innerHTML = `
+        Service Fees: $${serviceFees.toFixed(2)}<br>
+        Convenience Fee (2.5%): $${fee.toFixed(2)}<br>
+        Donation: $${donation.toFixed(2)}
+      `;
+      totalDisplay.innerHTML = `<strong>Total: $${total.toFixed(2)}</strong>`;
+    }
+
+    serviceFeesInput.addEventListener("input", updateTotal);
+    donationInput.addEventListener("input", updateTotal);
+
+    payBtn.addEventListener("click", async () => {
+      const serviceFees = parseFloat(serviceFeesInput.value) || 0;
+      const donation = parseFloat(donationInput.value) || 0;
+
+      if (serviceFees <= 0 && donation <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+      }
+
+      const response = await fetch("/.netlify/functions/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ serviceFees, donation })
+      });
+
+      const data = await response.json();
+
+      const result = await stripe.redirectToCheckout({ sessionId: data.id });
+      if (result.error) {
+        alert(result.error.message);
+      }
+    });
+
+    updateTotal(); // initialize totals
+  </script>
+</body>
+</html>
