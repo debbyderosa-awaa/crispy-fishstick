@@ -40,8 +40,8 @@ exports.handler = async function(event, context) {
         quantity: 1
       }],
       mode: "payment",
-      success_url: `${process.env.URL}/success.html`,
-      cancel_url: `${process.env.URL}/cancel.html`,
+      success_url: `https://www.awaa.org/success`,
+      cancel_url: `https://www.awaa.org/cancel`,
     });
 
     return { statusCode: 200, headers, body: JSON.stringify({ url: session.url }) };
