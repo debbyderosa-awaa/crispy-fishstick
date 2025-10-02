@@ -1,4 +1,4 @@
 [build]
-  functions = "tree/main/netifly/functions"
+  functions = "/netlify/functions"
   publish = "."
 
