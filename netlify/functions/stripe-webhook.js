@@ -30,11 +30,14 @@ exports.handler = async (event) => {
     console.log(session);
     
     const fullName = session.customer_details?.name || "Customer";
+    const phoneNumber = session.customer_details?.phone || "N/A";
+    const email = session.customer_details?.email || "N/A";
 
     // Add Breakdown of Payments
     const emailText = `
       ${fullName} has Completed a Payment.
-      Session ID: ${session.id}
+      Phone Number: ${phoneNumber}
+      Email: ${email}
       Amount Paid: $${(session.amount_total / 100).toFixed(2)}
     `;
 
@@ -44,9 +47,9 @@ exports.handler = async (event) => {
     try {
       for (const to of recipients) {
         await transporter.sendMail({
-          from: `"Payments Notification" <${process.env.EMAIL_USER}>`,
+          from: `"America World - Customer Payment Notification" <${process.env.EMAIL_USER}>`,
           to,
-          subject: `${fullName} Has Paid`,
+          subject: `${fullName} Has Made a Payment`,
           text: emailText
         });
       }
