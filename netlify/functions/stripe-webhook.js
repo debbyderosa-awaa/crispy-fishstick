@@ -29,7 +29,7 @@ exports.handler = async (event) => {
     
     console.log(session);
     
-    const fullName = session.metadata.customer_details.name || "Customer";
+    const fullName = session.metadata.name || "Customer";
 
     // Add Breakdown of Payments
     const emailText = `
@@ -55,7 +55,6 @@ exports.handler = async (event) => {
       console.error("Error Sending Emails:", err);
     }
   }
-
   return { statusCode: 200, body: "Received" };
 };
 
