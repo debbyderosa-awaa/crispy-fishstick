@@ -26,9 +26,10 @@ exports.handler = async (event) => {
 
   if (stripeEvent.type === "checkout.session.completed" || stripeEvent.type === "payment_intent.succeeded") {
     const session = stripeEvent.data.object;
+    
     console.log(session);
     
-    const fullName = session.metadata.customer_name || "Customer";
+    const fullName = session.metadata.customer_details.name || "Customer";
 
     // Add Breakdown of Payments
     const emailText = `
