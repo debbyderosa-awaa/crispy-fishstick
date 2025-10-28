@@ -29,7 +29,7 @@ exports.handler = async (event) => {
     
     console.log(session);
     
-    const fullName = session.metadata.name || "Customer";
+    const fullName = session.customer_details?.name || "Customer";
 
     // Add Breakdown of Payments
     const emailText = `
