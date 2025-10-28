@@ -80,6 +80,10 @@ exports.handler = async function(event, context) {
     // Add User's Name to the MetaData and Checkout Session
     const fullName = `${formData["First Name"]} ${formData["Last Name"]}`;
 
+    // Add Fee Breakdown to the MetaData
+    const feeBreakdownStr = JSON.stringify(feeBreakdown);
+    console.log(feeBreakdownStr);
+
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
