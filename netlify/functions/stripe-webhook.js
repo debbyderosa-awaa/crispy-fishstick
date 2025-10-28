@@ -24,7 +24,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: `Webhook Error: ${err.message}` };
   }
 
-  if (stripeEvent.type === "checkout.session.completed") {
+  if (stripeEvent.type === "checkout.session.completed" || stripeEvent.type === "payment_intent.succeeded") {
     const session = stripeEvent.data.object;
     
     const fullName = session.metadata.customer_name || "Customer";
