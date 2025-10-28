@@ -82,7 +82,7 @@ exports.handler = async function(event, context) {
 
     // Add Fee Breakdown to the MetaData
     const feeBreakdownStr = JSON.stringify(feeBreakdown);
-    console.log(feeBreakdownStr);
+    console.log(${feeBreakdownStr});
 
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
