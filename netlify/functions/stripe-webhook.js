@@ -41,8 +41,8 @@ exports.handler = async (event) => {
       Amount Paid: $${(session.amount_total / 100).toFixed(2)}
     `;
 
-    // Internal Emails to Notify - Personal Email for Testing
-    const recipients = ["bsturner38@yahoo.com"];
+    // Internal Emails to Notify - Kind Admin for Time Being
+    const recipients = ["admin@kindcreates.com"];
 
     try {
       for (const to of recipients) {
