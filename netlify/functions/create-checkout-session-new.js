@@ -91,6 +91,15 @@ exports.handler = async function(event, context) {
       metadata: {
         customer_name: fullName,
         email: formData.Email || "",
+          phone: formData.Phone || "",
+          donation: donation.toString(),
+          fee_breakdown: feeBreakdownStr,
+          address_line1: formData["Address Line 1"] || "",
+          address_line2: formData["Address Line 2"] || "",
+          city: formData.City || "",
+          state: formData.State || "",
+          zip: formData.Zip || "",
+          country: formData.Country || ""
       },
       mode: "payment",
       success_url: `https://www.awaa.org/success`,
