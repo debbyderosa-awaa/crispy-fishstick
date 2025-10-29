@@ -32,12 +32,24 @@ exports.handler = async (event) => {
     const fullName = session.customer_details?.name || "Customer";
     const phoneNumber = session.customer_details?.phone || "N/A";
     const email = session.customer_details?.email || "N/A";
+    const feeBreakdown = session.metadata?.fee_breakdown ? JSON.parse(session.metadata.fee_breakdown) : {};
+    // Add Address MetaData BreakDown
+    
+    // Add Breakdown of Payments - Fee Breakdown
+    let feeDetails = "";
+    for (const [name, amount] of Object.entries(feeBreakdown)) {
+      feeDetails += `${name}: $${parseFloat(amount).toFixed(2)}\n`;
+    }
 
-    // Add Breakdown of Payments
+    
     const emailText = `
       ${fullName} has Completed a Payment.
       Phone Number: ${phoneNumber}
       Email: ${email}
+
+      Fee Breakdown:
+      ${feeDetails}
+      
       Amount Paid: $${(session.amount_total / 100).toFixed(2)}
     `;
 
