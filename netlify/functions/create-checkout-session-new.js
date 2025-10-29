@@ -1,5 +1,5 @@
 // netlify/functions/create-checkout-session-new.js
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_TEST_KEY);
 
 exports.handler = async function(event, context) {
   const headers = {
