@@ -1,4 +1,4 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_TEST_KEY);
 const nodemailer = require("nodemailer");
 
 // Configure SMTP transporter
@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 exports.handler = async (event) => {
   const sig = event.headers["stripe-signature"];
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const endpointSecret = process.env.STRIPE_WEBHOOK_TEST;
 
   let stripeEvent;
   try {
