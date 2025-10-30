@@ -94,7 +94,7 @@ exports.handler = async function(event, context) {
           phone: formData.Phone || "",
           donation: donation.toString(),
           fee_breakdown: feeBreakdownStr,
-          convFee = convenienceFee.toString(),
+          convFee: convenienceFee.toString(),
           address_line1: formData["Address Line 1"] || "",
           address_line2: formData["Address Line 2"] || "",
           city: formData.City || "",
