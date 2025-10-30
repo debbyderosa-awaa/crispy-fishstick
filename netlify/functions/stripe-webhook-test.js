@@ -34,6 +34,8 @@ exports.handler = async (event) => {
     const fullName = session.metadata?.customer_name || "Customer";
     const phoneNumber = session.metadata?.phone || "N/A";
     const email = session.metadata?.email || "N/A";
+    const donation = session.metadata?.donation || "0";
+    const convenienceFee = session.metadata?.convFee || "0";
     const feeBreakdown = session.metadata?.fee_breakdown ? JSON.parse(session.metadata.fee_breakdown) : {};
     const addressLine1 = session.metadata?.address_line1 || "N/A";
     const addressLine2 = session.metadata?.address_line2 || "N/A";
