@@ -28,17 +28,24 @@ exports.handler = async (event) => {
     const session = stripeEvent.data.object;
     
     console.log(session);
-    
+    console.log(session.metadata);
+
+    // Access the MetaData and Store it for Email
     const fullName = session.customer_details?.name || "Customer";
-    const phoneNumber = session.customer_details?.phone || "N/A";
-    const email = session.customer_details?.email || "N/A";
+    const phoneNumber = session.metadata?.phone || "N/A";
+    const email = session.metadata?.email || "N/A";
     const feeBreakdown = session.metadata?.fee_breakdown ? JSON.parse(session.metadata.fee_breakdown) : {};
-    // Add Address MetaData BreakDown
+    const addressLine1 = session.metadata?.address_line1 || "N/A";
+    const addressLine2 = session.metadata?.address_line2 || "N/A";
+    const city = session.metadata?.city || "N/A";
+    const state = session.metadata?.state || "N/A";
+    const zip = session.metadata?.zip || "N/A";
+    const country = session.metadata?.country || "N/A";
     
     // Add Breakdown of Payments - Fee Breakdown
     let feeDetails = "";
     for (const [name, amount] of Object.entries(feeBreakdown)) {
-      feeDetails += `${name}: $${parseFloat(amount).toFixed(2)}\n`;
+      feeDetails += `${name} : $${parseFloat(amount).toFixed(2)}\n`;
     }
 
     
@@ -46,11 +53,11 @@ exports.handler = async (event) => {
       ${fullName} has Completed a Payment.
       Phone Number: ${phoneNumber}
       Email: ${email}
-
+      Address: ${addressLine1}
+      
       Fee Breakdown:
       ${feeDetails}
-      
-      Amount Paid: $${(session.amount_total / 100).toFixed(2)}
+      Total Amount Paid: $${(session.amount_total / 100).toFixed(2)}
     `;
 
     // Internal Emails to Notify - Kind Admin for Time Being
