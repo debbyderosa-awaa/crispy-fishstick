@@ -45,8 +45,7 @@ exports.handler = async (event) => {
     // Add Breakdown of Payments - Fee Breakdown
     let feeDetails = "";
     for (const [name, amount] of Object.entries(feeBreakdown)) {
-        const paddedName = name.padEnd(35, " ");
-        feeDetails += `${paddedName}: $${parseFloat(amount).toFixed(2)}\n`;
+        feeDetails += `${name}: $${parseFloat(amount).toFixed(2)}\n\t`;
     }
 
     
