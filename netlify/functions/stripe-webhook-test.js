@@ -31,7 +31,7 @@ exports.handler = async (event) => {
     console.log(session.metadata);
 
     // Access the MetaData and Store it for Email
-    const fullName = session.customer_details?.name || "Customer";
+    const fullName = session.metadata?.customer_name || "Customer";
     const phoneNumber = session.metadata?.phone || "N/A";
     const email = session.metadata?.email || "N/A";
     const feeBreakdown = session.metadata?.fee_breakdown ? JSON.parse(session.metadata.fee_breakdown) : {};
