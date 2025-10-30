@@ -56,6 +56,7 @@ exports.handler = async (event) => {
       Phone Number: ${phoneNumber}
       Email: ${email}
       Address: ${addressLine1}
+      Convenience Fee: ${convienceFee}
       
       Fee Breakdown:
       ${feeDetails}
