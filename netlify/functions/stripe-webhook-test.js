@@ -47,7 +47,7 @@ exports.handler = async (event) => {
     // Add Breakdown of Payments - Fee Breakdown
     let feeDetails = "";
     for (const [name, amount] of Object.entries(feeBreakdown)) {
-        feeDetails += `${name}: $${parseFloat(amount).toFixed(2)}\n\t`;
+        feeDetails += `${name}: $${parseFloat(amount).toFixed(2)}\n   `;
     }
 
     
@@ -56,10 +56,9 @@ exports.handler = async (event) => {
       Phone Number: ${phoneNumber}
       Email: ${email}
       Address: ${addressLine1}
-      Convenience Fee: ${convenienceFee}
-      
-      Fee Breakdown:
+      Fee Breakdown
       ${feeDetails}
+      Convenience Fee: $${convenienceFee}
       Total Amount Paid: $${(session.amount_total / 100).toFixed(2)}
     `;
 
